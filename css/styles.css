@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('images/background.jpg'); /* Add your background image */
+    background-size: cover; /* Make sure the background covers the whole area */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0.8); /* Semi-transparent background */
+    color: #fff;
+    padding: 20px 0; /* Increase padding for better spacing */
+    text-align: center;
+}
+
+header img {
+    max-width: 120px; /* Adjust size of logo */
+    margin-bottom: 10px; /* Space between logo and heading */
+}
+
+nav {
+    margin-top: 10px; /* Space between title and navigation links */
+}
+
+nav a {
+    color: #fff; /* Change link color to white */
+    text-decoration: none; /* Remove underline */
+    margin: 0 15px; /* Space between links */
+    padding: 5px 10px; /* Add padding for better click area */
+}
+
+nav a:hover {
+    background-color: #444; /* Add hover effect for links */
+    border-radius: 5px; /* Round the corners */
+}
+
+main {
+    background-color: rgba(255, 255, 255, 0.9); /* White background with slight transparency */
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Round corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin: 20px auto; /* Center main content */
+    max-width: 800px; /* Maximum width */
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 10px; /* Space below headings */
+}
+
+p {
+    line-height: 1.5; /* Increase line height for better readability */
+    margin-bottom: 20px; /* Space below paragraphs */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0; /* Add padding */
+    background-color: rgba(51, 51, 51, 0.8); /* Same background as header */
+    color: #fff; /* Change text color for better visibility */
+    border-radius: 0 0 10px 10px; /* Rounded corners */
+}
