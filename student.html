@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+        <button id="logoutButtonStudent">Logout</button>
+    </header>
+    <main>
+        <!-- Search for Books Section -->
+        <h2>Search for Books</h2>
+        <input type="text" id="searchInput" placeholder="Enter book title">
+        <button id="searchButton">Search</button>
+        <ul id="searchResults"></ul>
+
+        <!-- Borrowed Books Inventory Section -->
+        <h2>Your Inventory</h2>
+        <ul id="inventoryList"></ul>
+
+        <!-- Reserve Unavailable Books Section -->
+        <h2>Reserve Books</h2>
+        <button id="reserveButton">Show Unavailable Books</button>
+        <ul id="reserveResults"></ul>
+
+        <!-- Notifications Section -->
+        <h2>Notifications</h2>
+        <ul id="notificationsList"></ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 Library Management System</p>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>
