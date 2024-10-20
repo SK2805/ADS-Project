@@ -1,9 +1,9 @@
 // Initialize books from localStorage or with default values
 let books = JSON.parse(localStorage.getItem('books')) || [
-    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", available: true },
-    { title: "1984", author: "George Orwell", available: true },
-    { title: "To Kill a Mockingbird", author: "Harper Lee", available: false },
-    { title: "Moby Dick", author: "Herman Melville", available: true }
+    { title: "The Great Gatsby", author: "F. Scott Fitzgerald", genre: "Classic", available: true },
+    { title: "1984", author: "George Orwell", genre: "Dystopian", available: true },
+    { title: "To Kill a Mockingbird", author: "Harper Lee", genre: "Historical", available: false },
+    { title: "Moby Dick", author: "Herman Melville", genre: "Adventure", available: true }
 ];
 
 // Load user inventory from localStorage or initialize as empty
@@ -15,12 +15,12 @@ function aStarSearch(query, books) {
     const openSet = [];
     const closedSet = new Set();
 
-    // Populate the open set with initial nodes
+
     for (const book of books) {
         if (book.title.toLowerCase().includes(query.toLowerCase())) {
             openSet.push({
                 title: book.title,
-                cost: 1, // Cost for including this node
+                cost: 1, 
                 heuristic: heuristic(book.title, query),
                 book: book
             });
@@ -28,20 +28,14 @@ function aStarSearch(query, books) {
     }
 
     while (openSet.length > 0) {
-        // Sort the open set by total cost (cost + heuristic)
         openSet.sort((a, b) => (a.cost + a.heuristic) - (b.cost + b.heuristic));
 
-        // Get the node with the lowest total cost
         const currentNode = openSet.shift();
-
-        // Check if the current node is the goal
         if (currentNode.book) {
             return [currentNode.book]; // Found the book
         }
-
         closedSet.add(currentNode.title);
 
-        // Check for neighboring nodes
         for (const book of books) {
             if (!closedSet.has(book.title) && book.title.toLowerCase().includes(query.toLowerCase())) {
                 openSet.push({
@@ -53,14 +47,77 @@ function aStarSearch(query, books) {
             }
         }
     }
-
-    return []; // No books found
+    return []; 
 }
 
-// Heuristic function (simple string similarity based on length)
+
+
 function heuristic(bookTitle, query) {
     return Math.abs(bookTitle.length - query.length);
 }
+
+// A* search algorithm for book recommendations
+function aStarRecommendation(preferences, books) {
+    const openSet = [];
+
+    books.forEach(book => {
+        let similarity = 0;
+
+        // 1. Genre similarity: Add score if genres match
+        if (book.genre === preferences.genre) similarity += 2;
+
+        // 2. Author similarity: Add score if authors match
+        if (book.author === preferences.author) similarity += 2;
+
+        // 3. Popularity: Calculate popularity based on how many users borrowed/reserved the book
+        const popularity = Object.values(userInventory).reduce((count, userBooks) => {
+            return count + userBooks.filter(b => b.title === book.title).length;
+        }, 0);
+
+        // Normalize popularity score and add to similarity
+        similarity += popularity / 5;
+
+        // Only add books that have a positive similarity score (i.e., matching preferences)
+        if (similarity > 0) {
+            openSet.push({
+                book,
+                cost: 1, // Cost to explore this book
+                heuristic: 1 / similarity // Inverse similarity as heuristic
+            });
+        }
+    });
+
+    // Sort by total cost (cost + heuristic)
+    openSet.sort((a, b) => (a.cost + a.heuristic) - (b.cost + b.heuristic));
+
+    // Return the top 5 most relevant recommendations
+    return openSet.slice(0, 5).map(item => item.book);
+}
+
+// Function to display the recommended books for the student
+function displayRecommendations(username) {
+    // Example preferences; this would come from the student's borrowing history
+    const preferences = {
+        genre: "Dystopian",  // Example preference
+        author: "George Orwell"
+    };
+
+    // Get recommended books based on preferences
+    const recommendedBooks = aStarRecommendation(preferences, books);
+
+    // Display the recommended books in the student's dashboard
+    const recommendationsList = document.getElementById("recommendationsList");
+    recommendationsList.innerHTML = recommendedBooks.map(book => `
+        <li>${book.title} by ${book.author}</li>
+    `).join('');
+}
+
+// Event listener to display recommendations on page load
+document.addEventListener("DOMContentLoaded", () => {
+    const loggedInUsername = "student";  // Replace with the actual username logic
+    displayRecommendations(loggedInUsername);  // Show recommended books for the student
+});
+
 
 // Function to add a new user (not implemented in admin functionality)
 function addUser(username, password) {
